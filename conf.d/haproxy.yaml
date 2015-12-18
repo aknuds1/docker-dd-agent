@@ -1,4 +1,4 @@
 init_config:
 
 instances:
-  - url: https://haproxy/admin?stats
+  - url: https://staging.muzhack.com/admin?stats
