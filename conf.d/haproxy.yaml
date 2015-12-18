@@ -1,4 +1,6 @@
 init_config:
 
 instances:
-  - url: http://stats:stats@staging.muzhack.com:1936/
+  - url: http://staging.muzhack.com:1936/
+    username: stats
+    password: stats
