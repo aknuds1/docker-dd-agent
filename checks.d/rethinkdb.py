@@ -9,8 +9,9 @@ class RethinkDBCheck(AgentCheck):
     def check(self, instance):
         self.log.info('Checking RethinkDB connectivity...')
         rethinkdb_host = os.environ.get('RETHINKDB_HOST', 'localhost')
+        rethinkdb_auth_key = os.environ['RETHINKDB_AUTH_KEY']
         try:
-            with r.connect(host=rethinkdb_host, db='muzhack') as conn:
+            with r.connect(host=rethinkdb_host, db='muzhack', auth_key=rethinkdb_auth_key) as conn:
                 projects = r.table('projects').run(conn)
         except r.ReqlError as err:
             self.log.warn('Connecting to RethinkDB @ {} failed: {}'.format(rethinkdb_host, err))
