@@ -1,13 +1,26 @@
     #!/usr/bin/env python
 from checks import AgentCheck
 import time
+import rethinkdb as r
+import os
+
 
 class RethinkDBCheck(AgentCheck):
     def check(self, instance):
-        self.log.info('Checking RethinkDB connectivity')
-        msg_title = 'RethinkDB is functioning'
-        msg_text = 'RethinkDB was successfully queried for data'
-        alert_type = 'info'
+        self.log.info('Checking RethinkDB connectivity...')
+        rethinkdb_host = os.environ.get('RETHINKDB_HOST', 'localhost')
+        with r.connect(host=rethinkdb_host, db='muzhack') as conn:
+            projects = r.table('projects').run(conn)
+        if projects:
+            self.log.info('RethinkDB works, successfully queried projects')
+            msg_title = 'RethinkDB is functioning'
+            msg_text = 'RethinkDB was successfully queried for data'
+            alert_type = 'info'
+        else:
+            self.log.info('RethinkDB doesn\'t work, couldn\t query projects')
+            msg_title = 'RethinkDB returns no data'
+            msg_text = 'RethinkDB did not return any projects'
+            alert_type = 'error'
         self.event({
             'timestamp': int(time.time()),
             'event_type': 'rethinkdb_check',
@@ -15,12 +28,3 @@ class RethinkDBCheck(AgentCheck):
             'msg_text': msg_text,
             'alert_type': alert_type,
         })
-
-if __name__ == '__main__':
-    check, instances = RethinkDBCheck.from_yaml('/path/to/conf.d/http.yaml')
-    for instance in instances:
-        print('Checking RethinkDB...')
-        check.check(instance)
-        if check.has_events():
-            print('Events: {}'.format(check.get_events()))
-        print('Metrics: {}'.format(check.get_metrics()))
