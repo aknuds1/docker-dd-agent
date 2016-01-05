@@ -28,7 +28,7 @@ class RethinkDBCheck(AgentCheck):
                 self.log.info('RethinkDB works, successfully queried projects')
                 msg_title = 'RethinkDB is functioning'
                 msg_text = 'RethinkDB was successfully queried for data'
-                alert_type = 'info'
+                alert_type = 'success'
             else:
                 self.log.info(
                     'RethinkDB doesn\'t work, couldn\t query projects')
