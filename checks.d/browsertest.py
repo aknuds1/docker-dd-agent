@@ -45,7 +45,7 @@ class BrowserTestCheck(AgentCheck):
             send_event(
                 'Projects Page Timeout',
                 'Failed to load MuzHack projects page within {} seconds'
-                .format(timeout))
+                .format(timeout), 'error')
         else:
             wait = WebDriverWait(driver, timeout)
             try:
@@ -59,7 +59,7 @@ class BrowserTestCheck(AgentCheck):
                     'Projects Timeout',
                     'Failed to load MuzHack projects within {} seconds'.format(
                         timeout
-                    ))
+                    ), 'error')
             else:
                 elem = get_projects_container_elem()
 
@@ -75,4 +75,5 @@ class BrowserTestCheck(AgentCheck):
                     self.log.warn('Projects were unsuccessfully loaded')
                     send_event(
                         'MuzHack Projects Page Failing',
-                        'Projects were not displayed on MuzHack', 'error')
+                        'Projects were not displayed on MuzHack',
+                        'error')
