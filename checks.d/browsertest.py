@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# from checks import AgentCheck
+from checks import AgentCheck
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 import sys
