@@ -1,7 +1,7 @@
 FROM datadog/docker-dd-agent
 
-RUN apt-get update && apt-get install -y wget libicu libfontconfig1 libjpeg libfreetype6 \
-libsqlite3 libssl libpng
+RUN apt-get update && apt-get install -y wget libicu52 libfontconfig1 libfreetype6 \
+libsqlite3-0 libssl1.0.0 libpng12-0
 RUN wget https://s3.eu-central-1.amazonaws.com/muzhack.com/phantomjs.tar.gz && \
 tar xzf phantomjs.tar.gz && mv phantomjs /usr/local/bin \
 && apt-get purge --auto-remove -y wget \
