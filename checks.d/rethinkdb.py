@@ -41,4 +41,5 @@ class RethinkDBCheck(AgentCheck):
             'msg_title': msg_title,
             'msg_text': msg_text,
             'alert_type': alert_type,
+            'tags': ['rethinkdb', ],
         })

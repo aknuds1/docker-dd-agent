@@ -24,6 +24,7 @@ class BrowserTestCheck(AgentCheck):
                 'msg_title': title,
                 'msg_text': text,
                 'alert_type': alert_type,
+                'tags': ['browsertest', ],
             })
 
         self.log.info('Running browser tests...')
