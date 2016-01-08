@@ -28,7 +28,7 @@ class BrowserTestCheck(AgentCheck):
 
         self.log.info('Running browser tests...')
 
-        timeout = 30
+        timeout = 60
 
         driver = webdriver.PhantomJS(
             service_args=['--ignore-ssl-errors=true', '--ssl-protocol=ANY', ])
