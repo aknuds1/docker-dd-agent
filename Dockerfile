@@ -1,40 +1,7 @@
 FROM datadog/docker-dd-agent
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-build-essential \
-ca-certificates \
-g++ \
-git \
-flex \
-bison \
-gperf \
-perl \
-python \
-ruby \
-libsqlite3-dev \
-libfontconfig1-dev \
-libicu-dev \
-libfreetype6 \
-libssl-dev \
-libpng-dev \
-libjpeg-dev \
-&& git clone --recurse-submodules https://github.com/ariya/phantomjs /tmp/phantomjs \
-&& cd /tmp/phantomjs \
-&& ./build.py --confirm --silent --jobs 2 \
-&& mv bin/phantomjs /usr/local/bin \
-&& cd \
-&& apt-get purge --auto-remove -y \
-build-essential \
-g++ \
-git \
-flex \
-bison \
-gperf \
-ruby \
-perl \
-python \
-&& apt-get clean \
-&& rm -rf /tmp/* /var/lib/apt/lists/*
+RUN wget https://s3.eu-central-1.amazonaws.com/muzhack.com/phantomjs.tar.gz && \
+tar xzf phantomjs.tar.gz && mv phantomjs /usr/local/bin
 
 RUN /opt/datadog-agent/embedded/bin/pip install rethinkdb selenium
 
