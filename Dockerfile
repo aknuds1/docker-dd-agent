@@ -1,7 +1,11 @@
 FROM datadog/docker-dd-agent
 
+RUN apt-get update && apt-get install -y wget
 RUN wget https://s3.eu-central-1.amazonaws.com/muzhack.com/phantomjs.tar.gz && \
-tar xzf phantomjs.tar.gz && mv phantomjs /usr/local/bin
+tar xzf phantomjs.tar.gz && mv phantomjs /usr/local/bin \
+&& apt-get purge --auto-remove -y wget \
+&& apt-get clean \
+&& rm -rf /tmp/* /var/lib/apt/lists/*
 
 RUN /opt/datadog-agent/embedded/bin/pip install rethinkdb selenium
 
